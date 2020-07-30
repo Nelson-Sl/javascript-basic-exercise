@@ -8,5 +8,22 @@ export default function formatNumber(number, option) {
   // * Please implement the function and pass all the tests in format_number_spec.js.
   // * Please do NOT modify the signature of the function.
 
-  throw new Error('Please delete this line and implement the function');
+  let numberStr = number.toString();
+  if (numberStr.indexOf('.') === -1) {
+    numberStr += '.00';
+  } else {
+    // 小数点长度
+    const numDecimal = numberStr.length - 1 - numberStr.indexOf('.');
+    if (numDecimal === 1) {
+      numberStr += '0';
+    } else if (numDecimal > 2) {
+      // eslint-disable-next-line no-param-reassign
+      number = Math.round(number * (10 ** (numDecimal - 1))) / (10 ** (numDecimal - 1));
+      numberStr = number.toString();
+    }
+  }
+  if (option !== undefined) {
+    return `$ ${numberStr}`;
+  }
+  return numberStr;
 }
